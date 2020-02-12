@@ -26,6 +26,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        Uri data = intent.getData();
+
+        Log.d("FOO", action);
+        if(data != null) {
+            Log.d("FOO", data.toString());
+        }
+
         loginButton = findViewById(R.id.login_button);
         webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
