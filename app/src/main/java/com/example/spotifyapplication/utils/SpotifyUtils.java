@@ -11,7 +11,7 @@ public class SpotifyUtils {
     private final static String RESPONSE_TYPE_QUERYPARAM = "response_type";
 
     //TODO: Find URI for application
-    private final static String REDIRECT_URI_QUERYPARAM = "google.com";
+    private final static String REDIRECT_URI_QUERYPARAM = "redirect_uri";
 
     private final static String CLIENT_ID = "c9638677336d4bbf83dd57259fb5ac7a";
 
@@ -23,7 +23,7 @@ public class SpotifyUtils {
                 .appendQueryParameter(CLIENT_ID_QUERYPARAM, CLIENT_ID)
                 .appendQueryParameter(SCOPE_QUERYPARAM, SCOPES)
                 .appendQueryParameter(RESPONSE_TYPE_QUERYPARAM, "code")
-                .appendQueryParameter(REDIRECT_URI_QUERYPARAM, REDIRECT_URI_QUERYPARAM)
+                .appendQueryParameter(REDIRECT_URI_QUERYPARAM, "testing://asdf")
                 .build()
                 .toString();
     }
