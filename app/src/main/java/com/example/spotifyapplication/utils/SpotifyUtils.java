@@ -46,4 +46,40 @@ public class SpotifyUtils {
                 .build()
                 .toString();
     }
+
+    public static class TopTracksResults {
+        Track[] items;
+    }
+
+    public static class Track {
+        Album album;
+        Artist[] artists;
+        boolean explicit;
+        String name;
+        int popularity;
+        String preview_url;
+        String uri;
+        String id;
+    }
+
+    public static class Album {
+        Artist[] artists;
+        Image[] images;
+        String name;
+//        Maybe will add release date
+    }
+
+    public static class Artist {
+        String name;
+        String uri;
+    }
+
+    public static class Image {
+        String url;
+    }
+
+
+
+
+
 }
