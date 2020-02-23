@@ -56,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
             }
             Log.d("ASDF", url);
             Log.d("ASDF", response);
+
+            SpotifyUtils.Track[] res = SpotifyUtils.parseTopTracksResults(response);
+            for(SpotifyUtils.Track i : res) {
+                Log.d("FOO", i.name);
+                Log.d("FOO", i.album.images[0].url);
+            }
             return response;
         }
     }

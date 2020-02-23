@@ -2,6 +2,8 @@ package com.example.spotifyapplication.utils;
 
 import android.net.Uri;
 
+import com.google.gson.Gson;
+
 public class SpotifyUtils {
     private final static String SPOTIFY_ACCOUNT_BASE_URL = "https://accounts.spotify.com/authorize";
     private final static String SPOTIFY_TOKEN_BASE_URL = "https://accounts.spotify.com/api/token";
@@ -48,37 +50,46 @@ public class SpotifyUtils {
     }
 
     public static class TopTracksResults {
-        Track[] items;
+        public Track[] items;
     }
 
     public static class Track {
-        Album album;
-        Artist[] artists;
-        boolean explicit;
-        String name;
-        int popularity;
-        String preview_url;
-        String uri;
-        String id;
+        public Album album;
+        public Artist[] artists;
+        public boolean explicit;
+        public String name;
+        public int popularity;
+        public String preview_url;
+        public String uri;
+        public String id;
     }
 
     public static class Album {
-        Artist[] artists;
-        Image[] images;
-        String name;
+        public Artist[] artists;
+        public Image[] images;
+        public String name;
 //        Maybe will add release date
     }
 
     public static class Artist {
-        String name;
-        String uri;
+        public String name;
+        public String uri;
     }
 
     public static class Image {
-        String url;
+        public String url;
     }
 
 
+    public static Track[] parseTopTracksResults(String json) {
+        Gson gson = new Gson();
+        TopTracksResults results = gson.fromJson(json, TopTracksResults.class);
+        if(results != null && results.items != null) {
+            return results.items;
+        } else {
+            return null;
+        }
+    }
 
 
 
