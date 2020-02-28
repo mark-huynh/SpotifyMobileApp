@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ import java.util.Arrays;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity{
 
     private RecyclerView mTracksRV;
     private TrackAdapter mTrackAdapter;
@@ -45,32 +46,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        timeRangeSpinner = findViewById(R.id.time_range_spinner);
-
-        ArrayList<String> timeRangeOptions = new ArrayList<>(Arrays.asList("Several Years", "Last 6 Months", "Last 4 Weeks"));
-        ArrayAdapter<String> timeRangeSpinnerArr = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeRangeOptions);
-
-        timeRangeSpinnerArr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        timeRangeSpinner.setAdapter(timeRangeSpinnerArr);
-        timeRangeSpinner.setOnItemSelectedListener(this);
-
-        mTracksRV = findViewById(R.id.rv_tracks_list);
 
         loginButton = findViewById(R.id.login_button);
 
-        mTracksRV.setLayoutManager(new LinearLayoutManager(this));
-        mTracksRV.setHasFixedSize(true);
-
-        mTrackAdapter = new TrackAdapter();
-        mTracksRV.setAdapter(mTrackAdapter);
-
-        mViewModel = new ViewModelProvider(this).get(SpotifyViewModel.class);
-        mViewModel.getSearchResults().observe(this, new Observer<ArrayList<SpotifyUtils.Track>>() {
-            @Override
-            public void onChanged(ArrayList<SpotifyUtils.Track> tracks) {
-                mTrackAdapter.updateTrackData(tracks);
-            }
-        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,27 +58,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
-    private void doTopTracksQuery(){
-        mViewModel.loadSearchResults("50", timeRange);
-    }
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String range = parent.getItemAtPosition(position).toString();
-        Log.d("MAIN", range);
-        if(range.equals("Several Years")) {
-            timeRange = "long_term";
-        } else if(range.equals("Last 6 Months")) {
-            timeRange = "medium_term";
-        } else if(range.equals("Last 4 Weeks")) {
-            timeRange = "short_term";
+    private void doTopTracksQuery() {
+        MediaPlayer mp = new MediaPlayer();
+        try{
+            mp.setDataSource("https://p.scdn.co/mp3-preview/483355f39bb264b9828633561ab14a7a48e75270?cid=c9638677336d4bbf83dd57259fb5ac7a");
+            mp.prepare();
+            mp.start();
+        } catch (IOException e) {
+            Log.e("MAIN", "prepare() failed");
         }
-        doTopTracksQuery();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
 }
