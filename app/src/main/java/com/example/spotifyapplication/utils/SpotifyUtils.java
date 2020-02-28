@@ -4,6 +4,8 @@ import android.net.Uri;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
+
 public class SpotifyUtils {
     private final static String SPOTIFY_ACCOUNT_BASE_URL = "https://accounts.spotify.com/authorize";
     private final static String SPOTIFY_TOKEN_BASE_URL = "https://accounts.spotify.com/api/token";
@@ -53,7 +55,7 @@ public class SpotifyUtils {
         public Track[] items;
     }
 
-    public static class Track {
+    public static class Track implements Serializable {
         public Album album;
         public Artist[] artists;
         public boolean explicit;
@@ -64,19 +66,19 @@ public class SpotifyUtils {
         public String id;
     }
 
-    public static class Album {
+    public static class Album implements Serializable {
         public Artist[] artists;
         public Image[] images;
         public String name;
 //        Maybe will add release date
     }
 
-    public static class Artist {
+    public static class Artist implements Serializable {
         public String name;
         public String uri;
     }
 
-    public static class Image {
+    public static class Image implements Serializable {
         public String url;
     }
 

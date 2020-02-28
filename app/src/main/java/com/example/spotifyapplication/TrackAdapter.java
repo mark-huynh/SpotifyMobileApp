@@ -16,9 +16,15 @@ import java.util.ArrayList;
 
 public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHolder>{
     private ArrayList<SpotifyUtils.Track> mTracks;
+    private OnSearchResultClickListener mResultClickListener;
 
-    public TrackAdapter() {
+    interface OnSearchResultClickListener {
+        void onSearchResultClicked(SpotifyUtils.Track track);
+    }
+
+    public TrackAdapter(OnSearchResultClickListener listener) {
         mTracks = new ArrayList<>();
+        mResultClickListener = listener;
     }
 
     public void updateTrackData(ArrayList<SpotifyUtils.Track> tracks) {
@@ -59,6 +65,15 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
             mTrackName = itemView.findViewById(R.id.list_track_name);
             mExplicitText = itemView.findViewById(R.id.list_is_explicit);
             mAlbumCover = itemView.findViewById(R.id.list_album_cover);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mResultClickListener.onSearchResultClicked(
+                            mTracks.get(getAdapterPosition())
+                    );
+                }
+            });
         }
 
         public void bind(SpotifyUtils.Track track) {

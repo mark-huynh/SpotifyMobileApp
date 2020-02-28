@@ -29,7 +29,7 @@ import java.util.Arrays;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSearchResultClickListener, AdapterView.OnItemSelectedListener {
 
     private RecyclerView mTracksRV;
     private TrackAdapter mTrackAdapter;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mTracksRV.setLayoutManager(new LinearLayoutManager(this));
         mTracksRV.setHasFixedSize(true);
 
-        mTrackAdapter = new TrackAdapter();
+        mTrackAdapter = new TrackAdapter(this);
         mTracksRV.setAdapter(mTrackAdapter);
 
         mViewModel = new ViewModelProvider(this).get(SpotifyViewModel.class);
@@ -102,5 +102,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onSearchResultClicked(SpotifyUtils.Track track) {
+        //TODO: Make new activity for track details here
+        Intent intent = new Intent(this, TrackDetailActivity.class);
+        intent.putExtra(TrackDetailActivity.EXTRA_TRACK, track);
+        startActivity(intent);
     }
 }
