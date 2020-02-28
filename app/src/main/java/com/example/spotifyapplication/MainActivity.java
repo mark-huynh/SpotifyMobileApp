@@ -1,6 +1,8 @@
 package com.example.spotifyapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mTracksRV;
     private TrackAdapter mTrackAdapter;
-    Button loginButton;
+    private Button loginButton;
+    private SpotifyViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
         mTrackAdapter = new TrackAdapter();
         mTracksRV.setAdapter(mTrackAdapter);
 
+        mViewModel = new ViewModelProvider(this).get(SpotifyViewModel.class);
+        mViewModel.getSearchResults().observe(this, new Observer<ArrayList<SpotifyUtils.Track>>() {
+            @Override
+            public void onChanged(ArrayList<SpotifyUtils.Track> tracks) {
+                mTrackAdapter.updateTrackData(tracks);
+            }
+        });
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,36 +65,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void doTopTracksQuery(){
-        String url = SpotifyUtils.buildTopTracksURL("2", "short_term");
-        new SpotifyAsyncTask().execute(url);
+        mViewModel.loadSearchResults("50", "short_term");
     }
 
-    public class SpotifyAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            String url = strings[0];
-            String response = null;
-            try{
-                response = NetworkUtils.doHttpGetHeaders(url);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            if(s != null) {
-                SpotifyUtils.Track[] res = SpotifyUtils.parseTopTracksResults(s);
-                ArrayList<SpotifyUtils.Track> a = new ArrayList<>(Arrays.asList(res));
-                mTrackAdapter.updateTrackData(a);
-            } else {
-                Log.d("ERROR", "could not get results");
-            }
-
-        }
-    }
 
 }

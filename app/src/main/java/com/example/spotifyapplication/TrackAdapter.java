@@ -42,7 +42,11 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
     @Override
     public int getItemCount() {
-        return mTracks.size();
+        if(mTracks != null) {
+            return mTracks.size();
+        } else {
+            return 0;
+        }
     }
 
     class TrackViewHolder extends RecyclerView.ViewHolder {
