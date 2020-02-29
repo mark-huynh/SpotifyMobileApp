@@ -1,5 +1,6 @@
 package com.example.spotifyapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,6 +53,13 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
 
         timeRangeSpinnerArr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timeRangeSpinner.setAdapter(timeRangeSpinnerArr);
+
+        if(savedInstanceState != null) {
+            int foo = savedInstanceState.getInt("term", 0);
+            Log.d("MAIN", Integer.toString(foo));
+            timeRangeSpinner.setSelection(foo);
+        }
+
         timeRangeSpinner.setOnItemSelectedListener(this);
 
         mTracksRV = findViewById(R.id.rv_tracks_list);
@@ -110,5 +118,11 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
         Intent intent = new Intent(this, TrackDetailActivity.class);
         intent.putExtra(TrackDetailActivity.EXTRA_TRACK, track);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("term", timeRangeSpinner.getSelectedItemPosition());
     }
 }

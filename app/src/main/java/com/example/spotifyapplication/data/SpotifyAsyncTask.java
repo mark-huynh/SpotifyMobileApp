@@ -47,5 +47,4 @@ public class SpotifyAsyncTask extends AsyncTask<String, Void, String> {
         callback.onSearchFinished(items);
     }
 
-//    TODO: Connect this with async task, do error status, make viewmodel
 }
