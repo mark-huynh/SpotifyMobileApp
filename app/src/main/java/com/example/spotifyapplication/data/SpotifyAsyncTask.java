@@ -39,6 +39,8 @@ public class SpotifyAsyncTask extends AsyncTask<String, Void, String> {
         super.onPostExecute(s);
         ArrayList<SpotifyUtils.Track> items = null;
         if(s != null) {
+            Log.d("ASDF", s);
+
             SpotifyUtils.Track[] res = SpotifyUtils.parseTopTracksResults(s);
             items = new ArrayList<>(Arrays.asList(res));
         } else {

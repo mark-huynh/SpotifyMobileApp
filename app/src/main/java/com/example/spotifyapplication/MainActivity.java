@@ -18,6 +18,7 @@ import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import com.example.spotifyapplication.utils.NetworkUtils;
@@ -38,8 +39,10 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
     private SpotifyViewModel mViewModel;
 
     private Spinner timeRangeSpinner;
+    private NumberPicker numPicker;
 
     private String timeRange;
+    private String numTracks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +57,39 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
         timeRangeSpinnerArr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timeRangeSpinner.setAdapter(timeRangeSpinnerArr);
 
-        if(savedInstanceState != null) {
+        if(savedInstanceState != null && savedInstanceState.containsKey("term")) {
             int foo = savedInstanceState.getInt("term", 0);
             Log.d("MAIN", Integer.toString(foo));
             timeRangeSpinner.setSelection(foo);
         }
 
         timeRangeSpinner.setOnItemSelectedListener(this);
+
+        numPicker = findViewById(R.id.num_picker);
+        numPicker.setMaxValue(50);
+        numPicker.setMinValue(1);
+
+        numTracks = "50";
+        numPicker.setValue(50);
+        if(savedInstanceState != null && savedInstanceState.containsKey("num")) {
+            int foo = savedInstanceState.getInt("num", 0);
+            numPicker.setValue(foo);
+            numTracks = Integer.toString(foo);
+            Log.d("MAIN", "SAVEDINT");
+        }
+
+
+        numPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
+                Log.d("MAIN", "new num: " + newVal);
+                numTracks = Integer.toString(newVal);
+                doTopTracksQuery();
+            }
+        });
+
+
 
         mTracksRV = findViewById(R.id.rv_tracks_list);
 
@@ -89,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
     }
 
     private void doTopTracksQuery(){
-        mViewModel.loadSearchResults("50", timeRange);
+        mViewModel.loadSearchResults(numTracks, timeRange);
     }
 
 
@@ -124,5 +153,6 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("term", timeRangeSpinner.getSelectedItemPosition());
+        outState.putInt("num", numPicker.getValue());
     }
 }
