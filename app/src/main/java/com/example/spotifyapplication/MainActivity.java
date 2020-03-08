@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
 
     @Override
     public void onSearchResultClicked(SpotifyUtils.Track track) {
-        //TODO: Make new activity for track details here
         Intent intent = new Intent(this, TrackDetailActivity.class);
         intent.putExtra(TrackDetailActivity.EXTRA_TRACK, track);
         startActivity(intent);

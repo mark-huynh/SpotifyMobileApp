@@ -7,18 +7,16 @@ import com.example.spotifyapplication.utils.NetworkUtils;
 import com.example.spotifyapplication.utils.SpotifyUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-public class SpotifyAsyncTask extends AsyncTask<String, Void, String> {
+public class SpotifyAudioFeaturesAsync extends AsyncTask<String, Void, String> {
 
     private Callback callback;
 
     public interface Callback {
-        void onSearchFinished(ArrayList<SpotifyUtils.Track> searchResults);
+        void onSearchFinished(SpotifyUtils.AudioFeaturesResults searchResults);
     }
 
-    public SpotifyAsyncTask(Callback callback) {
+    public SpotifyAudioFeaturesAsync(Callback callback) {
         this.callback = callback;
     }
 
@@ -37,15 +35,18 @@ public class SpotifyAsyncTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        ArrayList<SpotifyUtils.Track> items = null;
-        if(s != null) {
-            Log.d("ASDF", s);
-            SpotifyUtils.Track[] res = SpotifyUtils.parseTopTracksResults(s);
-            items = new ArrayList<>(Arrays.asList(res));
+        SpotifyUtils.AudioFeaturesResults results = null;
+        if(s != null)
+        {
+             results = SpotifyUtils.parseAudioFeaturesResult(s);
         } else {
             Log.d("ASDF", "could not get results");
         }
-        callback.onSearchFinished(items);
-    }
+        callback.onSearchFinished(results);
 
+//        Log.d("ASYC", "Dance" + results.danceability);
+//        Log.d("ASYC", "En" + results.energy);
+//        Log.d("ASYC", "Val" + results.valence);
+//        Log.d("ASYC", "Liv" + results.liveness);
+    }
 }

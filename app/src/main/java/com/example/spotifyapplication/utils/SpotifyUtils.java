@@ -51,6 +51,14 @@ public class SpotifyUtils {
                 .toString();
     }
 
+    public static String buildAudioFeaturesURL(String id) {
+        return Uri.parse(SPOTIFY_API_BASE_URL).buildUpon()
+                .appendPath("audio-features")
+                .appendPath(id)
+                .build()
+                .toString();
+    }
+
     public static class TopTracksResults {
         public Track[] items;
     }
@@ -88,6 +96,24 @@ public class SpotifyUtils {
         TopTracksResults results = gson.fromJson(json, TopTracksResults.class);
         if(results != null && results.items != null) {
             return results.items;
+        } else {
+            return null;
+        }
+    }
+
+    public static class AudioFeaturesResults {
+        public double danceability;
+        public double energy;
+        public double valence;
+        public double liveness;
+        public double instrumentalness;
+    }
+
+    public static AudioFeaturesResults parseAudioFeaturesResult(String json) {
+        Gson gson = new Gson();
+        AudioFeaturesResults results = gson.fromJson(json, AudioFeaturesResults.class);
+        if(results != null) {
+            return results;
         } else {
             return null;
         }
