@@ -31,10 +31,16 @@ public class TrackDetailActivity extends AppCompatActivity {
             public void onChanged(SpotifyUtils.AudioFeaturesResults audioFeaturesResults) {
                 if(audioFeaturesResults != null)
                 {
-                    Log.d("ASYC", "Dance" + audioFeaturesResults.danceability);
-                    Log.d("ASYC", "En" + audioFeaturesResults.energy);
-                    Log.d("ASYC", "Val" + audioFeaturesResults.valence);
-                    Log.d("ASYC", "Liv" + audioFeaturesResults.liveness);
+                    TextView dance = findViewById(R.id.danceability_tv);
+                    dance.setText(String.valueOf(audioFeaturesResults.danceability));
+                    TextView energy = findViewById(R.id.energy_tv);
+                    energy.setText(String.valueOf(audioFeaturesResults.energy));
+                    TextView valence = findViewById(R.id.valence_tv);
+                    valence.setText(String.valueOf(audioFeaturesResults.valence));
+                    TextView live = findViewById(R.id.liveness_tv);
+                    live.setText(String.valueOf(audioFeaturesResults.liveness));
+                    TextView instr = findViewById(R.id.instrumentalness_tv);
+                    instr.setText(String.valueOf(audioFeaturesResults.instrumentalness));
                 }
 
             }

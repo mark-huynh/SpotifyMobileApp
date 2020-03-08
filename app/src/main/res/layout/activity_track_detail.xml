@@ -43,6 +43,36 @@
                 android:gravity="center"/>
 
         </LinearLayout>
-
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FOO"
+        android:gravity="center"
+        android:id="@+id/danceability_tv"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FOO"
+        android:gravity="center"
+        android:id="@+id/energy_tv"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FOO"
+        android:gravity="center"
+        android:id="@+id/valence_tv"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FOO"
+        android:gravity="center"
+        android:id="@+id/liveness_tv"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FOO"
+        android:gravity="center"
+        android:id="@+id/instrumentalness_tv"/>
 </LinearLayout>
