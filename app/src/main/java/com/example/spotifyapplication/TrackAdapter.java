@@ -1,5 +1,7 @@
 package com.example.spotifyapplication;
 
+import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.spotifyapplication.utils.SpotifyUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHolder>{
     private ArrayList<SpotifyUtils.Track> mTracks;
     private OnSearchResultClickListener mResultClickListener;
+    private MediaPlayer mp;
 
     interface OnSearchResultClickListener {
         void onSearchResultClicked(SpotifyUtils.Track track);
@@ -25,6 +29,8 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     public TrackAdapter(OnSearchResultClickListener listener) {
         mTracks = new ArrayList<>();
         mResultClickListener = listener;
+
+        mp = new MediaPlayer();
     }
 
     public void updateTrackData(ArrayList<SpotifyUtils.Track> tracks) {
@@ -76,7 +82,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
             });
         }
 
-        public void bind(SpotifyUtils.Track track) {
+        public void bind(final SpotifyUtils.Track track) {
             mTrackName.setText(track.name);
             if(track.explicit) {
                 mExplicitText.setVisibility(View.VISIBLE);
@@ -84,6 +90,38 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
                 mExplicitText.setVisibility(View.INVISIBLE);
             }
             Glide.with(mAlbumCover.getContext()).load(track.album.images[0].url).into(mAlbumCover);
+
+            mAlbumCover.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try{
+                        if(mp.isPlaying()) {
+                            mp.reset();
+                            mp.stop();
+                        }
+                        mp.reset();
+                        mp.setDataSource(track.preview_url);
+                        mp.prepare();
+                        mp.start();
+                    } catch (IOException e) {
+                        Log.e("MAIN", "prepare() failed");
+                    }
+                }
+            });
         }
     }
+
+//            try{
+//        if(mp.isPlaying()){
+//            mp.reset();
+//            mp.stop();
+//        }
+//        mp.setDataSource("https://p.scdn.co/mp3-preview/483355f39bb264b9828633561ab14a7a48e75270?cid=c9638677336d4bbf83dd57259fb5ac7a");
+//        mp.prepare();
+//        mp.start();
+//    } catch (
+//    IOException e) {
+//        Log.e("MAIN", "prepare() failed");
+//    }
+
 }
