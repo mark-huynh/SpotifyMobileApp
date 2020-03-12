@@ -78,14 +78,11 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
             Log.d("MAIN", "SAVEDINT");
         }
 
-
         numPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
                 Log.d("MAIN", "new num: " + newVal);
-                numTracks = Integer.toString(newVal);
-                doTopTracksQuery();
+                mTrackAdapter.changeNumDisplayed(newVal);
             }
         });
 
@@ -100,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
 
         mTrackAdapter = new TrackAdapter(this);
         mTracksRV.setAdapter(mTrackAdapter);
+
+        mTrackAdapter.changeNumDisplayed(numPicker.getValue());
 
         mViewModel = new ViewModelProvider(this).get(SpotifyViewModel.class);
         mViewModel.getSearchResults().observe(this, new Observer<ArrayList<SpotifyUtils.Track>>() {
@@ -118,7 +117,8 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
     }
 
     private void doTopTracksQuery(){
-        mViewModel.loadSearchResults(numTracks, timeRange);
+//        mViewModel.loadSearchResults(numTracks, timeRange);
+        mViewModel.loadSearchResults("50", timeRange);
     }
 
 

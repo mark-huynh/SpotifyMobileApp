@@ -21,6 +21,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     private ArrayList<SpotifyUtils.Track> mTracks;
     private OnSearchResultClickListener mResultClickListener;
     private MediaPlayer mp;
+    private int numDisplayed;
 
     interface OnSearchResultClickListener {
         void onSearchResultClicked(SpotifyUtils.Track track);
@@ -31,6 +32,12 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
         mResultClickListener = listener;
 
         mp = new MediaPlayer();
+
+    }
+
+    public void changeNumDisplayed(int numDisplayed) {
+        this.numDisplayed = numDisplayed;
+        notifyDataSetChanged();
     }
 
     public void updateTrackData(ArrayList<SpotifyUtils.Track> tracks) {
@@ -55,7 +62,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     @Override
     public int getItemCount() {
         if(mTracks != null) {
-            return mTracks.size();
+            return Math.min(mTracks.size(), numDisplayed);
         } else {
             return 0;
         }
