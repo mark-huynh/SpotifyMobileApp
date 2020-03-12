@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(OAuthInfo oAuthInfo) {
                 if(oAuthInfo != null) {
+                    performRefresh(oAuthInfo.refresh_token);
 //                    TODO: call refresh endpoint to get new access token
                     openMainApplication();
                 }
@@ -77,8 +78,47 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public class LoginAsyncTask extends AsyncTask<String, Void, String> {
+    public void performRefresh(String refresh_key) {
+        new RefreshAsyncTask().execute(refresh_key);
+    }
 
+    public class RefreshAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String refresh_token = strings[0];
+            String response = null;
+            try {
+                response = NetworkUtils.doPostRefresh(refresh_token);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (s != null) {
+                Log.d("REFRESH RESPONSE: ", s);
+                try {
+                    JSONObject mainObj = new JSONObject(s);
+                    String access = mainObj.getString("access_token");
+                    Log.d("ACCESS: ", access);
+                    Config.ACCESS_TOKEN = access;
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("Auth: ", "Error parsing refresh JSON");
+
+                }
+            } else {
+                Log.d("AUTH", "could not get results");
+            }
+        }
+    }
+
+    public class LoginAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
             String code = strings[0];
@@ -103,8 +143,8 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("ACCESS: ", access);
                     Log.d("REFRESH: ", refresh);
 
-//                    TODO: Store refresh key in storage and use it to determine if login is needed
                     Config.ACCESS_TOKEN = access;
+
                     OAuthInfo credentials = new OAuthInfo();
                     credentials.refresh_token = refresh;
                     oAuthViewModel.insertOauth(credentials);

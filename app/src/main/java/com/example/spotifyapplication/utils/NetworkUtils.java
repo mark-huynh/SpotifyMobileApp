@@ -23,6 +23,25 @@ public class NetworkUtils {
         }
     }
 
+    public static String doPostRefresh(String refresh_token) throws IOException {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("grant_type", "refresh_token")
+                .add("refresh_token", refresh_token)
+                .add("client_id", SpotifyUtils.CLIENT_ID)
+                .add("client_secret", Config.CLIENT_SECRET)
+                .build();
+        Request request = new Request.Builder()
+                .url(SpotifyUtils.SPOTIFY_TOKEN_BASE_URL)
+                .post(requestBody)
+                .build();
+        Response response = mHTTPClient.newCall(request).execute();
+        try {
+            return response.body().string();
+        } finally {
+            response.close();
+        }
+    }
+
     public static String doPostTokenRequest(String code) throws IOException{
         RequestBody requestBody = new FormBody.Builder()
                 .add("grant_type", "authorization_code")
