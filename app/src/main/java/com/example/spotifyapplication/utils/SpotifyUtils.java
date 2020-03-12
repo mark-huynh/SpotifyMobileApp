@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class SpotifyUtils {
     private final static String SPOTIFY_ACCOUNT_BASE_URL = "https://accounts.spotify.com/authorize";
-    private final static String SPOTIFY_TOKEN_BASE_URL = "https://accounts.spotify.com/api/token";
+    public final static String SPOTIFY_TOKEN_BASE_URL = "https://accounts.spotify.com/api/token";
 
     private final static String SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 
@@ -19,10 +19,11 @@ public class SpotifyUtils {
     //TODO: Find URI for application
     private final static String REDIRECT_URI_QUERYPARAM = "redirect_uri";
 
-    private final static String CLIENT_ID = "c9638677336d4bbf83dd57259fb5ac7a";
+    public final static String CLIENT_ID = "c9638677336d4bbf83dd57259fb5ac7a";
 
     //TODO: Test if can work with multiple scopes that are space separated
     private final static String SCOPES = "user-top-read";
+
 
     public static String buildAuthURL() {
         return Uri.parse(SPOTIFY_ACCOUNT_BASE_URL).buildUpon()

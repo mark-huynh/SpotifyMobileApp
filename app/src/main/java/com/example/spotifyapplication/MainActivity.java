@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
     }
 
     private void doTopTracksQuery(){
-//        mViewModel.loadSearchResults(numTracks, timeRange);
         mViewModel.loadSearchResults("50", timeRange);
     }
 
