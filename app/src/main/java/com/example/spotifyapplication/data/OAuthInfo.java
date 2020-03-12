@@ -10,5 +10,5 @@ import java.io.Serializable;
 public class OAuthInfo implements Serializable {
     @PrimaryKey
     @NonNull
-    public String client_secret;
+    public String refresh_token;
 }

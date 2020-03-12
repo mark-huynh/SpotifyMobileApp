@@ -1,6 +1,8 @@
 package com.example.spotifyapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.spotifyapplication.data.OAuthInfo;
 import com.example.spotifyapplication.utils.Config;
 import com.example.spotifyapplication.utils.NetworkUtils;
 import com.example.spotifyapplication.utils.SpotifyUtils;
@@ -21,11 +24,30 @@ import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button loginButton;
+    private Button loginButton;
+    private OAuthViewModel oAuthViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        oAuthViewModel = new ViewModelProvider(
+                this,
+                new ViewModelProvider.AndroidViewModelFactory(
+                        getApplication()
+                )
+        ).get(OAuthViewModel.class);
+
+        oAuthViewModel.getSingleOAuth().observe(this, new Observer<OAuthInfo>() {
+            @Override
+            public void onChanged(OAuthInfo oAuthInfo) {
+                if(oAuthInfo != null) {
+//                    TODO: call refresh endpoint to get new access token
+                    openMainApplication();
+                }
+            }
+        });
 
         Intent intent = getIntent();
         Uri data = intent.getData();
@@ -83,6 +105,9 @@ public class LoginActivity extends AppCompatActivity {
 
 //                    TODO: Store refresh key in storage and use it to determine if login is needed
                     Config.ACCESS_TOKEN = access;
+                    OAuthInfo credentials = new OAuthInfo();
+                    credentials.refresh_token = refresh;
+                    oAuthViewModel.insertOauth(credentials);
                     openMainApplication();
 
                 } catch (JSONException e) {

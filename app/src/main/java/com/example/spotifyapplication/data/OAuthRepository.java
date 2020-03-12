@@ -3,6 +3,8 @@ package com.example.spotifyapplication.data;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+
 public class OAuthRepository {
     private OAuthDao mOauthDao;
 
@@ -17,6 +19,10 @@ public class OAuthRepository {
 
     public void deleteOauth(OAuthInfo oAuthInfo) {
         new DeleteAsyncTask(mOauthDao).execute(oAuthInfo);
+    }
+
+    public LiveData<OAuthInfo> getSingleOAuth() {
+        return mOauthDao.getSingleOAuth();
     }
 
     private static class InsertAsyncTask extends AsyncTask<OAuthInfo, Void, Void> {
