@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,6 +23,7 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
+import com.example.spotifyapplication.data.OAuthInfo;
 import com.example.spotifyapplication.utils.NetworkUtils;
 import com.example.spotifyapplication.utils.SpotifyUtils;
 
@@ -44,10 +47,28 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
     private String timeRange;
     private String numTracks;
 
+    private OAuthViewModel oAuthViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        oAuthViewModel = new ViewModelProvider(
+                this,
+                new ViewModelProvider.AndroidViewModelFactory(
+                        getApplication()
+                )
+        ).get(OAuthViewModel.class);
+
+        oAuthViewModel.getSingleOAuth().observe(this, new Observer<OAuthInfo>() {
+            @Override
+            public void onChanged(OAuthInfo oAuthInfo) {
+                if(oAuthInfo == null) {
+                    openLoginPage();
+                }
+            }
+        });
 
         timeRangeSpinner = findViewById(R.id.time_range_spinner);
 
@@ -116,6 +137,11 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
         });
     }
 
+    public void openLoginPage() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
     private void doTopTracksQuery(){
         mViewModel.loadSearchResults("50", timeRange);
     }
@@ -152,5 +178,22 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
         super.onSaveInstanceState(outState);
         outState.putInt("term", timeRangeSpinner.getSelectedItemPosition());
         outState.putInt("num", numPicker.getValue());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.action_logout) {
+            oAuthViewModel.deleteAllOauthEntries();
+            return true;
+        }
+        else{
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -26,4 +26,8 @@ public class OAuthViewModel extends AndroidViewModel {
         return mRepo.getSingleOAuth();
     }
 
+    public void deleteAllOauthEntries(){
+        mRepo.deleteAllOauthEntries();
+    }
+
 }

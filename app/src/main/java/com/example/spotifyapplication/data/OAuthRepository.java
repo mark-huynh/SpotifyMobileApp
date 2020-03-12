@@ -25,6 +25,11 @@ public class OAuthRepository {
         return mOauthDao.getSingleOAuth();
     }
 
+    public void deleteAllOauthEntries(){
+//        mOauthDao.deleteAllOauthEntries();
+        new DeleteAllAsyncTask(mOauthDao).execute();
+    }
+
     private static class InsertAsyncTask extends AsyncTask<OAuthInfo, Void, Void> {
         private OAuthDao mDao;
         InsertAsyncTask(OAuthDao dao) {
@@ -50,4 +55,19 @@ public class OAuthRepository {
             return null;
         }
     }
+
+    private static class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
+        private OAuthDao mDao;
+        DeleteAllAsyncTask(OAuthDao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mDao.deleteAllOauthEntries();
+            return null;
+        }
+
+    }
+
 }
