@@ -2,6 +2,7 @@ package com.example.spotifyapplication.data;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.spotifyapplication.utils.SpotifyUtils;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 
 public class TopTracksRepository implements SpotifyAsyncTask.Callback{
     private MutableLiveData<ArrayList<SpotifyUtils.Track>> mTrackResults;
+    private MutableLiveData<Status> mLoadingStatus;
     private String prevLimit;
     private String prevRange;
 
@@ -19,6 +21,13 @@ public class TopTracksRepository implements SpotifyAsyncTask.Callback{
         mTrackResults.setValue(null);
         prevLimit = "";
         prevRange = "";
+
+        mLoadingStatus = new MutableLiveData<>();
+        mLoadingStatus.setValue(Status.SUCCESS);
+    }
+
+    public LiveData<Status> getLoadingStatus() {
+        return mLoadingStatus;
     }
 
     public MutableLiveData<ArrayList<SpotifyUtils.Track>> getTrackResults() {
@@ -27,6 +36,7 @@ public class TopTracksRepository implements SpotifyAsyncTask.Callback{
 
     public void loadSearchResults(String limit, String range) {
         if(!(prevLimit.equals(limit) && prevRange.equals(range))) {
+            mLoadingStatus.setValue(Status.LOADING);
             prevRange = range;
             prevLimit = limit;
             mTrackResults.setValue(null);
@@ -42,9 +52,9 @@ public class TopTracksRepository implements SpotifyAsyncTask.Callback{
     public void onSearchFinished(ArrayList<SpotifyUtils.Track> searchResults) {
         this.mTrackResults.setValue(searchResults);
         if(searchResults != null) {
-//            update status
+            mLoadingStatus.setValue(Status.SUCCESS);
         } else {
-//            update status
+            mLoadingStatus.setValue(Status.ERROR);
         }
     }
 }

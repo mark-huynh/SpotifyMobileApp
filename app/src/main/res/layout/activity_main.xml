@@ -13,8 +13,6 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-
-
             <Spinner
             android:id="@+id/time_range_spinner"
             android:layout_width="wrap_content"
@@ -40,6 +38,25 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:padding="16dp"
+            android:visibility="invisible"
+            android:text="We were unable to execute your query, please check your internet connection"/>
+
+        <ProgressBar
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:id="@+id/pb_loading_indicator"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="32dp"
+            android:visibility="invisible"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_tracks_list"
             android:layout_width="match_parent"

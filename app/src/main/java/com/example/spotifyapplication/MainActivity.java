@@ -22,9 +22,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.spotifyapplication.data.OAuthInfo;
+import com.example.spotifyapplication.data.Status;
 import com.example.spotifyapplication.utils.NetworkUtils;
 import com.example.spotifyapplication.utils.SpotifyUtils;
 
@@ -36,6 +39,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSearchResultClickListener, AdapterView.OnItemSelectedListener {
+
+    private TextView mErrorMessageTV;
+    private ProgressBar mLoadingIndicatorPB;
 
     private RecyclerView mTracksRV;
     private TrackAdapter mTrackAdapter;
@@ -69,6 +75,10 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
                 }
             }
         });
+
+        mLoadingIndicatorPB = findViewById(R.id.pb_loading_indicator);
+        mErrorMessageTV = findViewById(R.id.tv_error_message);
+
 
         timeRangeSpinner = findViewById(R.id.time_range_spinner);
 
@@ -128,6 +138,22 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
             }
         });
 
+        mViewModel.getLoadingStatus().observe(this, new Observer<Status>() {
+            @Override
+            public void onChanged(Status status) {
+                if (status == Status.LOADING) {
+                    mLoadingIndicatorPB.setVisibility(View.VISIBLE);
+                } else if (status == Status.SUCCESS) {
+                    mLoadingIndicatorPB.setVisibility(View.INVISIBLE);
+                    mTracksRV.setVisibility(View.VISIBLE);
+                    mErrorMessageTV.setVisibility(View.INVISIBLE);
+                } else {
+                    mLoadingIndicatorPB.setVisibility(View.INVISIBLE);
+                    mTracksRV.setVisibility(View.INVISIBLE);
+                    mErrorMessageTV.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     public void openLoginPage() {
