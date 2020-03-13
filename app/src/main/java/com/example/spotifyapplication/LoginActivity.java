@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
     public void openMainApplication() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void performRefresh(String refresh_key) {

@@ -79,6 +79,7 @@ public class SpotifyUtils {
         public Artist[] artists;
         public Image[] images;
         public String name;
+        public String uri;
 //        Maybe will add release date
     }
 

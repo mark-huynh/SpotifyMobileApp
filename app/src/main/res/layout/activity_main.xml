@@ -6,22 +6,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-<Spinner
-    android:id="@+id/time_range_spinner"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    />
 
-    <NumberPicker
-        android:id="@+id/num_picker"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"/>
-
-    <Button
-        android:id="@+id/login_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get Top Tracks"/>
+        android:orientation="horizontal"
+        android:gravity="center">
+
+
+
+            <Spinner
+            android:id="@+id/time_range_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right">
+
+            <NumberPicker
+                android:id="@+id/num_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity=""/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <FrameLayout
         android:layout_width="match_parent"

@@ -20,26 +20,35 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center"
+            >
 
             <TextView
+                android:paddingBottom="7dp"
                 android:id="@+id/detail_track_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TEST"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textSize="20dp"
+                />
 
             <TextView
+                android:paddingBottom="7dp"
                 android:id="@+id/detailed_artists"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TEST"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textSize="15dp"/>
             <TextView
+                android:paddingBottom="7dp"
                 android:id="@+id/detailed_album_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TEST"
+                android:textSize="15dp"
                 android:gravity="center"/>
 
         </LinearLayout>
@@ -48,31 +57,76 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FOO"
+        android:text="Danceability"
         android:gravity="center"
+        android:textSize="15dp"
         android:id="@+id/danceability_tv"/>
+
+    <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+        android:id="@+id/danceability_progress"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:rcBackgroundPadding="10dp"
+        app:rcIconSize="50dp"
+        app:rcIconPadding="5dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FOO"
+        android:text="Energy"
+        android:textSize="15dp"
         android:gravity="center"
         android:id="@+id/energy_tv"/>
+
+    <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+        android:id="@+id/energy_progress"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:rcBackgroundPadding="10dp"
+        app:rcIconSize="50dp"
+        app:rcIconPadding="5dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FOO"
+        android:text="Valence/Positivity"
+        android:textSize="15dp"
         android:gravity="center"
         android:id="@+id/valence_tv"/>
+    <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+        android:id="@+id/valence_progress"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:rcBackgroundPadding="10dp"
+        app:rcIconSize="50dp"
+        app:rcIconPadding="5dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FOO"
+        android:text="Liveness"
+        android:textSize="15dp"
         android:gravity="center"
         android:id="@+id/liveness_tv"/>
+
+    <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+        android:id="@+id/liveness_progress"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:rcBackgroundPadding="10dp"
+        app:rcIconSize="50dp"
+        app:rcIconPadding="5dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FOO"
+        android:text="Instrumentalness"
+        android:textSize="15dp"
         android:gravity="center"
         android:id="@+id/instrumentalness_tv"/>
+    <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+        android:id="@+id/instrumentalness_progress"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:rcBackgroundPadding="10dp"
+        app:rcIconSize="50dp"
+        app:rcIconPadding="5dp" />
 </LinearLayout>

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
 
     private RecyclerView mTracksRV;
     private TrackAdapter mTrackAdapter;
-    private Button loginButton;
     private SpotifyViewModel mViewModel;
 
     private Spinner timeRangeSpinner;
@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
 
         mTracksRV = findViewById(R.id.rv_tracks_list);
 
-        loginButton = findViewById(R.id.login_button);
 
         mTracksRV.setLayoutManager(new LinearLayoutManager(this));
         mTracksRV.setHasFixedSize(true);
@@ -129,12 +128,6 @@ public class MainActivity extends AppCompatActivity implements TrackAdapter.OnSe
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doTopTracksQuery();
-            }
-        });
     }
 
     public void openLoginPage() {
