@@ -37,29 +37,37 @@ public class TrackDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_track_detail);
 
         final IconRoundCornerProgressBar danceProgress = findViewById(R.id.danceability_progress);
-        danceProgress.setProgressColor(Color.parseColor("#56d2c2"));
+        danceProgress.setProgressColor(Color.parseColor("#BBEA54"));
         danceProgress.setProgressBackgroundColor(Color.parseColor("#757575"));
         danceProgress.setMax(1);
+        danceProgress.setIconImageResource(R.drawable.ic_action_dance);
 
         final IconRoundCornerProgressBar energyProgress = findViewById(R.id.energy_progress);
-        energyProgress.setProgressColor(Color.parseColor("#56d2c2"));
+        energyProgress.setProgressColor(Color.parseColor("#EA5454"));
         energyProgress.setProgressBackgroundColor(Color.parseColor("#757575"));
         energyProgress.setMax(1);
+        energyProgress.setIconImageResource(R.drawable.ic_action_energy);
 
         final IconRoundCornerProgressBar valenceProgress = findViewById(R.id.valence_progress);
-        valenceProgress.setProgressColor(Color.parseColor("#56d2c2"));
+        valenceProgress.setProgressColor(Color.parseColor("#E8EA54"));
         valenceProgress.setProgressBackgroundColor(Color.parseColor("#757575"));
         valenceProgress.setMax(1);
+        valenceProgress.setIconImageResource(R.drawable.ic_action_positivity);
+
 
         final IconRoundCornerProgressBar livenessProgress = findViewById(R.id.liveness_progress);
-        livenessProgress.setProgressColor(Color.parseColor("#56d2c2"));
+        livenessProgress.setProgressColor(Color.parseColor("#54E3EA"));
         livenessProgress.setProgressBackgroundColor(Color.parseColor("#757575"));
         livenessProgress.setMax(1);
+        livenessProgress.setIconImageResource(R.drawable.ic_action_live);
+
 
         final IconRoundCornerProgressBar instrumentProgress = findViewById(R.id.instrumentalness_progress);
-        instrumentProgress.setProgressColor(Color.parseColor("#56d2c2"));
+        instrumentProgress.setProgressColor(Color.parseColor("#D054EA"));
         instrumentProgress.setProgressBackgroundColor(Color.parseColor("#757575"));
         instrumentProgress.setMax(1);
+        instrumentProgress.setIconImageResource(R.drawable.ic_action_instrument);
+
 
 //        danceProgress.setIconBackgroundColor(Color.parseColor("#38c0ae"));
 
